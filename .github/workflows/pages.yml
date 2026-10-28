@@ -1,0 +1,46 @@
+# GitHub Actions: on every push to main, GitHub builds the game on one of its own computers and
+# publishes dist/ to GitHub Pages (https://<you>.github.io/wizard-duel/).
+# The real models are not in the repository (.gitignore), so the published game uses the stand-in
+# wizards: the game falls back to them when a .glb is missing.
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: # also a "Run workflow" button on GitHub
+
+# What this workflow may do: read the code, publish to Pages.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deploy at a time; a newer push cancels an older one still running.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7 # get the code
+      - uses: actions/setup-node@v7 # install Node, like on this computer
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci # install the packages listed in package-lock.json
+      - run: npm run build # Vite writes the game into dist/
+      - uses: actions/upload-pages-artifact@v5 # hand dist/ to Pages
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5 # publish it

@@ -1,0 +1,1970 @@
+{
+ "tags": null,
+ "name": "serpentTailTip",
+ "editorData": null,
+ "customType": "BABYLON.NodeGeometry",
+ "outputNodeId": 2688,
+ "blocks": [
+  {
+   "customType": "BABYLON.GeometryOutputBlock",
+   "id": 2688,
+   "name": "serpentTailTipOutput",
+   "visibleOnFrame": false,
+   "inputs": [
+    {
+     "name": "geometry",
+     "inputName": "geometry",
+     "targetBlockId": 2687,
+     "targetConnectionName": "output",
+     "isExposedOnFrame": true,
+     "exposedPortPosition": -1
+    }
+   ],
+   "outputs": []
+  },
+  {
+   "customType": "BABYLON.ComputeNormalsBlock",
+   "id": 2687,
+   "name": "serpentTailTipNormals",
+   "visibleOnFrame": false,
+   "inputs": [
+    {
+     "name": "geometry",
+     "inputName": "geometry",
+     "targetBlockId": 2686,
+     "targetConnectionName": "output",
+     "isExposedOnFrame": true,
+     "exposedPortPosition": -1
+    }
+   ],
+   "outputs": [
+    {
+     "name": "output"
+    }
+   ]
+  },
+  {
+   "customType": "BABYLON.MergeGeometryBlock",
+   "id": 2686,
+   "name": "tailMerge",
+   "visibleOnFrame": false,
+   "inputs": [
+    {
+     "name": "geometry0",
+     "inputName": "geometry0",
+     "targetBlockId": 2665,
+     "targetConnectionName": "output",
+     "isExposedOnFrame": true,
+     "exposedPortPosition": -1
+    },
+    {
+     "name": "geometry1",
+     "inputName": "geometry1",
+     "targetBlockId": 2666,
+     "targetConnectionName": "geometry",
+     "isExposedOnFrame": true,
+     "exposedPortPosition": -1
+    },
+    {
+     "name": "geometry2",
+     "inputName": "geometry2",
+     "targetBlockId": 2685,
+     "targetConnectionName": "output",
+     "isExposedOnFrame": true,
+     "exposedPortPosition": -1
+    },
+    {
+     "name": "geometry3"
+    },
+    {
+     "name": "geometry4"
+    }
+   ],
+   "outputs": [
+    {
+     "name": "output"
+    }
+   ],
+   "evaluateContext": false
+  },
+  {
+   "customType": "BABYLON.SetPositionsBlock",
+   "id": 2665,
+   "name": "tailShape",
+   "visibleOnFrame": false,
+   "inputs": [
+    {
+     "name": "geometry",
+     "inputName": "geometry",
+     "targetBlockId": 2635,
+     "targetConnectionName": "output",
+     "isExposedOnFrame": true,
+     "exposedPortPosition": -1
+    },
+    {
+     "name": "positions",
+     "inputName": "positions",
+     "targetBlockId": 2664,
+     "targetConnectionName": "output",
+     "isExposedOnFrame": true,
+     "exposedPortPosition": -1
+    }
+   ],
+   "outputs": [
+    {
+     "name": "output"
+    }
+   ],
+   "evaluateContext": true
+  },
+  {
+   "customType": "BABYLON.GeometryTransformBlock",
+   "id": 2635,
+   "name": "tailLay",
+   "visibleOnFrame": false,
+   "inputs": [
+    {
+     "name": "value",
+     "inputName": "value",
+     "targetBlockId": 2634,
+     "targetConnectionName": "geometry",
+     "isExposedOnFrame": true,
+     "exposedPortPosition": -1
+    },
+    {
+     "name": "matrix"
+    },
+    {
+     "name": "translation",
+     "valueType": "BABYLON.Vector3",
+     "value": [
+      0,
+      0,
+      -0.55
+     ]
+    },
+    {
+     "name": "rotation",
+     "valueType": "BABYLON.Vector3",
+     "value": [
+      -1.5707963267948966,
+      0,
+      0
+     ]
+    },
+    {
+     "name": "scaling",
+     "valueType": "BABYLON.Vector3",
+     "value": [
+      1,
+      1,
+      1
+     ]
+    },
+    {
+     "name": "pivot",
+     "valueType": "BABYLON.Vector3",
+     "value": [
+      0,
+      0,
+      0
+     ]
+    }
+   ],
+   "outputs": [
+    {
+     "name": "output"
+    }
+   ],
+   "evaluateContext": true
+  },
+  {
+   "customType": "BABYLON.CylinderBlock",
+   "id": 2634,
+   "name": "tailTube",
+   "visibleOnFrame": false,
+   "inputs": [
+    {
+     "name": "height",
+     "valueType": "number",
+     "value": 1.1
+    },
+    {
+     "name": "diameter",
+     "valueType": "number",
+     "value": 2
+    },
+    {
+     "name": "diameterTop",
+     "valueType": "number",
+     "value": -1
+    },
+    {
+     "name": "diameterBottom",
+     "valueType": "number",
+     "value": -1
+    },
+    {
+     "name": "subdivisions",
+     "valueType": "number",
+     "value": 18
+    },
+    {
+     "name": "tessellation",
+     "valueType": "number",
+     "value": 12
+    },
+    {
+     "name": "arc",
+     "valueType": "number",
+     "value": 1
+    }
+   ],
+   "outputs": [
+    {
+     "name": "geometry"
+    }
+   ],
+   "evaluateContext": false
+  },
+  {
+   "customType": "BABYLON.MathBlock",
+   "id": 2664,
+   "name": "tailCurled",
+   "visibleOnFrame": false,
+   "inputs": [
+    {
+     "name": "left",
+     "inputName": "left",
+     "targetBlockId": 2663,
+     "targetConnectionName": "output",
+     "isExposedOnFrame": true,
+     "exposedPortPosition": -1
+    },
+    {
+     "name": "right",
+     "inputName": "right",
+     "targetBlockId": 2647,
+     "targetConnectionName": "xyz",
+     "isExposedOnFrame": true,
+     "exposedPortPosition": -1
+    }
+   ],
+   "outputs": [
+    {
+     "name": "output"
+    }
+   ],
+   "operation": 0
+  },
+  {
+   "customType": "BABYLON.MathBlock",
+   "id": 2663,
+   "name": "tailSqueezed",
+   "visibleOnFrame": false,
+   "inputs": [
+    {
+     "name": "left",
+     "inputName": "left",
+     "targetBlockId": 2656,
+     "targetConnectionName": "output",
+     "isExposedOnFrame": true,
+     "exposedPortPosition": -1
+    },
+    {
+     "name": "right",
+     "inputName": "right",
+     "targetBlockId": 2662,
+     "targetConnectionName": "xyz",
+     "isExposedOnFrame": true,
+     "exposedPortPosition": -1
+    }
+   ],
+   "outputs": [
+    {
+     "name": "output"
+    }
+   ],
+   "operation": 2
+  },
+  {
+   "customType": "BABYLON.MathBlock",
+   "id": 2656,
+   "name": "tailLumpy",
+   "visibleOnFrame": false,
+   "inputs": [
+    {
+     "name": "left",
+     "inputName": "left",
+     "targetBlockId": 2632,
+     "targetConnectionName": "output",
+     "isExposedOnFrame": true,
+     "exposedPortPosition": -1
+    },
+    {
+     "name": "right",
+     "inputName": "right",
+     "targetBlockId": 2655,
+     "targetConnectionName": "output",
+     "isExposedOnFrame": true,
+     "exposedPortPosition": -1
+    }
+   ],
+   "outputs": [
+    {
+     "name": "output"
+    }
+   ],
+   "operation": 0
+  },
+  {
+   "customType": "BABYLON.GeometryInputBlock",
+   "id": 2632,
+   "name": "positions",
+   "visibleOnFrame": false,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "output"
+    }
+   ],
+   "type": 8,
+   "contextualValue": 1,
+   "min": 0,
+   "max": 0,
+   "groupInInspector": "",
+   "displayInInspector": true
+  },
+  {
+   "customType": "BABYLON.MathBlock",
+   "id": 2655,
+   "name": "tailLumpSideways",
+   "visibleOnFrame": false,
+   "inputs": [
+    {
+     "name": "left",
+     "inputName": "left",
+     "targetBlockId": 2653,
+     "targetConnectionName": "output",
+     "isExposedOnFrame": true,
+     "exposedPortPosition": -1
+    },
+    {
+     "name": "right",
+     "inputName": "right",
+     "targetBlockId": 2654,
+     "targetConnectionName": "output",
+     "isExposedOnFrame": true,
+     "exposedPortPosition": -1
+    }
+   ],
+   "outputs": [
+    {
+     "name": "output"
+    }
+   ],
+   "operation": 2
+  },
+  {
+   "customType": "BABYLON.MathBlock",
+   "id": 2653,
+   "name": "tailLumpPush",
+   "visibleOnFrame": false,
+   "inputs": [
+    {
+     "name": "left",
+     "inputName": "left",
+     "targetBlockId": 2633,
+     "targetConnectionName": "output",
+     "isExposedOnFrame": true,
+     "exposedPortPosition": -1
+    },
+    {
+     "name": "right",
+     "inputName": "right",
+     "targetBlockId": 2652,
+     "targetConnectionName": "output",
+     "isExposedOnFrame": true,
+     "exposedPortPosition": -1
+    }
+   ],
+   "outputs": [
+    {
+     "name": "output"
+    }
+   ],
+   "operation": 2
+  },
+  {
+   "customType": "BABYLON.GeometryInputBlock",
+   "id": 2633,
+   "name": "normals",
+   "visibleOnFrame": false,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "output"
+    }
+   ],
+   "type": 8,
+   "contextualValue": 2,
+   "min": 0,
+   "max": 0,
+   "groupInInspector": "",
+   "displayInInspector": true
+  },
+  {
+   "customType": "BABYLON.MathBlock",
+   "id": 2652,
+   "name": "tailLumpAmount",
+   "visibleOnFrame": false,
+   "inputs": [
+    {
+     "name": "left",
+     "inputName": "left",
+     "targetBlockId": 2650,
+     "targetConnectionName": "output",
+     "isExposedOnFrame": true,
+     "exposedPortPosition": -1
+    },
+    {
+     "name": "right",
+     "inputName": "right",
+     "targetBlockId": 2651,
+     "targetConnectionName": "output",
+     "isExposedOnFrame": true,
+     "exposedPortPosition": -1
+    }
+   ],
+   "outputs": [
+    {
+     "name": "output"
+    }
+   ],
+   "operation": 2
+  },
+  {
+   "customType": "BABYLON.MathBlock",
+   "id": 2650,
+   "name": "tailNoiseCentred",
+   "visibleOnFrame": false,
+   "inputs": [
+    {
+     "name": "left",
+     "inputName": "left",
+     "targetBlockId": 2648,
+     "targetConnectionName": "output",
+     "isExposedOnFrame": true,
+     "exposedPortPosition": -1
+    },
+    {
+     "name": "right",
+     "inputName": "right",
+     "targetBlockId": 2649,
+     "targetConnectionName": "output",
+     "isExposedOnFrame": true,
+     "exposedPortPosition": -1
+    }
+   ],
+   "outputs": [
+    {
+     "name": "output"
+    }
+   ],
+   "operation": 0
+  },
+  {
+   "customType": "BABYLON.NoiseBlock",
+   "id": 2648,
+   "name": "tailNoise",
+   "visibleOnFrame": false,
+   "inputs": [
+    {
+     "name": "offset",
+     "valueType": "BABYLON.Vector3",
+     "value": [
+      5.3,
+      2.9,
+      8.1
+     ]
+    },
+    {
+     "name": "scale",
+     "valueType": "number",
+     "value": 3
+    },
+    {
+     "name": "octaves",
+     "valueType": "number",
+     "value": 2
+    },
+    {
+     "name": "roughness",
+     "valueType": "number",
+     "value": 0.5
+    }
+   ],
+   "outputs": [
+    {
+     "name": "output"
+    }
+   ]
+  },
+  {
+   "customType": "BABYLON.GeometryInputBlock",
+   "id": 2649,
+   "name": "tailNoiseHalf",
+   "visibleOnFrame": false,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "output"
+    }
+   ],
+   "type": 2,
+   "contextualValue": 0,
+   "min": 0,
+   "max": 0,
+   "groupInInspector": "",
+   "displayInInspector": true,
+   "valueType": "number",
+   "value": -0.5
+  },
+  {
+   "customType": "BABYLON.GeometryInputBlock",
+   "id": 2651,
+   "name": "tailLumpSize",
+   "visibleOnFrame": false,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "output"
+    }
+   ],
+   "type": 2,
+   "contextualValue": 0,
+   "min": 0,
+   "max": 0,
+   "groupInInspector": "",
+   "displayInInspector": true,
+   "valueType": "number",
+   "value": 0.5
+  },
+  {
+   "customType": "BABYLON.GeometryInputBlock",
+   "id": 2654,
+   "name": "noZ",
+   "visibleOnFrame": false,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "output"
+    }
+   ],
+   "type": 8,
+   "contextualValue": 0,
+   "min": 0,
+   "max": 0,
+   "groupInInspector": "",
+   "displayInInspector": true,
+   "valueType": "BABYLON.Vector3",
+   "value": [
+    1,
+    1,
+    0
+   ]
+  },
+  {
+   "customType": "BABYLON.VectorConverterBlock",
+   "id": 2662,
+   "name": "tailSqueeze",
+   "visibleOnFrame": false,
+   "inputs": [
+    {
+     "name": "xyzw "
+    },
+    {
+     "name": "xyz "
+    },
+    {
+     "name": "xy "
+    },
+    {
+     "name": "zw "
+    },
+    {
+     "name": "x ",
+     "inputName": "x ",
+     "targetBlockId": 2658,
+     "targetConnectionName": "output",
+     "isExposedOnFrame": true,
+     "exposedPortPosition": -1
+    },
+    {
+     "name": "y ",
+     "inputName": "y ",
+     "targetBlockId": 2660,
+     "targetConnectionName": "output",
+     "isExposedOnFrame": true,
+     "exposedPortPosition": -1
+    },
+    {
+     "name": "z ",
+     "inputName": "z ",
+     "targetBlockId": 2661,
+     "targetConnectionName": "output",
+     "isExposedOnFrame": true,
+     "exposedPortPosition": -1
+    },
+    {
+     "name": "w "
+    }
+   ],
+   "outputs": [
+    {
+     "name": "xyzw"
+    },
+    {
+     "name": "xyz"
+    },
+    {
+     "name": "xy"
+    },
+    {
+     "name": "zw"
+    },
+    {
+     "name": "x"
+    },
+    {
+     "name": "y"
+    },
+    {
+     "name": "z"
+    },
+    {
+     "name": "w"
+    }
+   ]
+  },
+  {
+   "customType": "BABYLON.MathBlock",
+   "id": 2658,
+   "name": "tailWidth",
+   "visibleOnFrame": false,
+   "inputs": [
+    {
+     "name": "left",
+     "inputName": "left",
+     "targetBlockId": 2642,
+     "targetConnectionName": "output",
+     "isExposedOnFrame": true,
+     "exposedPortPosition": -1
+    },
+    {
+     "name": "right",
+     "inputName": "right",
+     "targetBlockId": 2657,
+     "targetConnectionName": "output",
+     "isExposedOnFrame": true,
+     "exposedPortPosition": -1
+    }
+   ],
+   "outputs": [
+    {
+     "name": "output"
+    }
+   ],
+   "operation": 2
+  },
+  {
+   "customType": "BABYLON.GeometryPowBlock",
+   "id": 2642,
+   "name": "tailThickness",
+   "visibleOnFrame": false,
+   "inputs": [
+    {
+     "name": "value",
+     "inputName": "value",
+     "targetBlockId": 2640,
+     "targetConnectionName": "output",
+     "isExposedOnFrame": true,
+     "exposedPortPosition": -1
+    },
+    {
+     "name": "power",
+     "inputName": "power",
+     "targetBlockId": 2641,
+     "targetConnectionName": "output",
+     "isExposedOnFrame": true,
+     "exposedPortPosition": -1
+    }
+   ],
+   "outputs": [
+    {
+     "name": "output"
+    }
+   ]
+  },
+  {
+   "customType": "BABYLON.GeometryTrigonometryBlock",
+   "id": 2640,
+   "name": "tailLeft",
+   "visibleOnFrame": false,
+   "inputs": [
+    {
+     "name": "input",
+     "inputName": "input",
+     "targetBlockId": 2639,
+     "targetConnectionName": "output",
+     "isExposedOnFrame": true,
+     "exposedPortPosition": -1
+    }
+   ],
+   "outputs": [
+    {
+     "name": "output"
+    }
+   ],
+   "operation": 15
+  },
+  {
+   "customType": "BABYLON.GeometryClampBlock",
+   "id": 2639,
+   "name": "tailT",
+   "visibleOnFrame": false,
+   "inputs": [
+    {
+     "name": "value",
+     "inputName": "value",
+     "targetBlockId": 2638,
+     "targetConnectionName": "output",
+     "isExposedOnFrame": true,
+     "exposedPortPosition": -1
+    },
+    {
+     "name": "min",
+     "valueType": "number",
+     "value": 0
+    },
+    {
+     "name": "max",
+     "valueType": "number",
+     "value": 1
+    }
+   ],
+   "outputs": [
+    {
+     "name": "output"
+    }
+   ]
+  },
+  {
+   "customType": "BABYLON.MathBlock",
+   "id": 2638,
+   "name": "tailAlong",
+   "visibleOnFrame": false,
+   "inputs": [
+    {
+     "name": "left",
+     "inputName": "left",
+     "targetBlockId": 2636,
+     "targetConnectionName": "z",
+     "isExposedOnFrame": true,
+     "exposedPortPosition": -1
+    },
+    {
+     "name": "right",
+     "inputName": "right",
+     "targetBlockId": 2637,
+     "targetConnectionName": "output",
+     "isExposedOnFrame": true,
+     "exposedPortPosition": -1
+    }
+   ],
+   "outputs": [
+    {
+     "name": "output"
+    }
+   ],
+   "operation": 2
+  },
+  {
+   "customType": "BABYLON.VectorConverterBlock",
+   "id": 2636,
+   "name": "tailSplit",
+   "visibleOnFrame": false,
+   "inputs": [
+    {
+     "name": "xyzw "
+    },
+    {
+     "name": "xyz ",
+     "inputName": "xyz ",
+     "targetBlockId": 2632,
+     "targetConnectionName": "output",
+     "isExposedOnFrame": true,
+     "exposedPortPosition": -1
+    },
+    {
+     "name": "xy "
+    },
+    {
+     "name": "zw "
+    },
+    {
+     "name": "x "
+    },
+    {
+     "name": "y "
+    },
+    {
+     "name": "z "
+    },
+    {
+     "name": "w "
+    }
+   ],
+   "outputs": [
+    {
+     "name": "xyzw"
+    },
+    {
+     "name": "xyz"
+    },
+    {
+     "name": "xy"
+    },
+    {
+     "name": "zw"
+    },
+    {
+     "name": "x"
+    },
+    {
+     "name": "y"
+    },
+    {
+     "name": "z"
+    },
+    {
+     "name": "w"
+    }
+   ]
+  },
+  {
+   "customType": "BABYLON.GeometryInputBlock",
+   "id": 2637,
+   "name": "perMetre",
+   "visibleOnFrame": false,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "output"
+    }
+   ],
+   "type": 2,
+   "contextualValue": 0,
+   "min": 0,
+   "max": 0,
+   "groupInInspector": "",
+   "displayInInspector": true,
+   "valueType": "number",
+   "value": -0.9090909090909091
+  },
+  {
+   "customType": "BABYLON.GeometryInputBlock",
+   "id": 2641,
+   "name": "taperPower",
+   "visibleOnFrame": false,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "output"
+    }
+   ],
+   "type": 2,
+   "contextualValue": 0,
+   "min": 0,
+   "max": 0,
+   "groupInInspector": "",
+   "displayInInspector": true,
+   "valueType": "number",
+   "value": 0.75
+  },
+  {
+   "customType": "BABYLON.GeometryInputBlock",
+   "id": 2657,
+   "name": "width",
+   "visibleOnFrame": false,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "output"
+    }
+   ],
+   "type": 2,
+   "contextualValue": 0,
+   "min": 0,
+   "max": 0,
+   "groupInInspector": "",
+   "displayInInspector": true,
+   "valueType": "number",
+   "value": 0.0875
+  },
+  {
+   "customType": "BABYLON.MathBlock",
+   "id": 2660,
+   "name": "tailHeight",
+   "visibleOnFrame": false,
+   "inputs": [
+    {
+     "name": "left",
+     "inputName": "left",
+     "targetBlockId": 2642,
+     "targetConnectionName": "output",
+     "isExposedOnFrame": true,
+     "exposedPortPosition": -1
+    },
+    {
+     "name": "right",
+     "inputName": "right",
+     "targetBlockId": 2659,
+     "targetConnectionName": "output",
+     "isExposedOnFrame": true,
+     "exposedPortPosition": -1
+    }
+   ],
+   "outputs": [
+    {
+     "name": "output"
+    }
+   ],
+   "operation": 2
+  },
+  {
+   "customType": "BABYLON.GeometryInputBlock",
+   "id": 2659,
+   "name": "height",
+   "visibleOnFrame": false,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "output"
+    }
+   ],
+   "type": 2,
+   "contextualValue": 0,
+   "min": 0,
+   "max": 0,
+   "groupInInspector": "",
+   "displayInInspector": true,
+   "valueType": "number",
+   "value": 0.07875
+  },
+  {
+   "customType": "BABYLON.GeometryInputBlock",
+   "id": 2661,
+   "name": "keepZ",
+   "visibleOnFrame": false,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "output"
+    }
+   ],
+   "type": 2,
+   "contextualValue": 0,
+   "min": 0,
+   "max": 0,
+   "groupInInspector": "",
+   "displayInInspector": true,
+   "valueType": "number",
+   "value": 1
+  },
+  {
+   "customType": "BABYLON.VectorConverterBlock",
+   "id": 2647,
+   "name": "tailLiftUp",
+   "visibleOnFrame": false,
+   "inputs": [
+    {
+     "name": "xyzw "
+    },
+    {
+     "name": "xyz "
+    },
+    {
+     "name": "xy "
+    },
+    {
+     "name": "zw "
+    },
+    {
+     "name": "x "
+    },
+    {
+     "name": "y ",
+     "inputName": "y ",
+     "targetBlockId": 2646,
+     "targetConnectionName": "output",
+     "isExposedOnFrame": true,
+     "exposedPortPosition": -1
+    },
+    {
+     "name": "z "
+    },
+    {
+     "name": "w "
+    }
+   ],
+   "outputs": [
+    {
+     "name": "xyzw"
+    },
+    {
+     "name": "xyz"
+    },
+    {
+     "name": "xy"
+    },
+    {
+     "name": "zw"
+    },
+    {
+     "name": "x"
+    },
+    {
+     "name": "y"
+    },
+    {
+     "name": "z"
+    },
+    {
+     "name": "w"
+    }
+   ]
+  },
+  {
+   "customType": "BABYLON.MathBlock",
+   "id": 2646,
+   "name": "tailLift",
+   "visibleOnFrame": false,
+   "inputs": [
+    {
+     "name": "left",
+     "inputName": "left",
+     "targetBlockId": 2644,
+     "targetConnectionName": "output",
+     "isExposedOnFrame": true,
+     "exposedPortPosition": -1
+    },
+    {
+     "name": "right",
+     "inputName": "right",
+     "targetBlockId": 2645,
+     "targetConnectionName": "output",
+     "isExposedOnFrame": true,
+     "exposedPortPosition": -1
+    }
+   ],
+   "outputs": [
+    {
+     "name": "output"
+    }
+   ],
+   "operation": 2
+  },
+  {
+   "customType": "BABYLON.GeometryPowBlock",
+   "id": 2644,
+   "name": "tailCurve",
+   "visibleOnFrame": false,
+   "inputs": [
+    {
+     "name": "value",
+     "inputName": "value",
+     "targetBlockId": 2639,
+     "targetConnectionName": "output",
+     "isExposedOnFrame": true,
+     "exposedPortPosition": -1
+    },
+    {
+     "name": "power",
+     "inputName": "power",
+     "targetBlockId": 2643,
+     "targetConnectionName": "output",
+     "isExposedOnFrame": true,
+     "exposedPortPosition": -1
+    }
+   ],
+   "outputs": [
+    {
+     "name": "output"
+    }
+   ]
+  },
+  {
+   "customType": "BABYLON.GeometryInputBlock",
+   "id": 2643,
+   "name": "three",
+   "visibleOnFrame": false,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "output"
+    }
+   ],
+   "type": 2,
+   "contextualValue": 0,
+   "min": 0,
+   "max": 0,
+   "groupInInspector": "",
+   "displayInInspector": true,
+   "valueType": "number",
+   "value": 3
+  },
+  {
+   "customType": "BABYLON.GeometryInputBlock",
+   "id": 2645,
+   "name": "curl",
+   "visibleOnFrame": false,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "output"
+    }
+   ],
+   "type": 2,
+   "contextualValue": 0,
+   "min": 0,
+   "max": 0,
+   "groupInInspector": "",
+   "displayInInspector": true,
+   "valueType": "number",
+   "value": 0.25
+  },
+  {
+   "customType": "BABYLON.SphereBlock",
+   "id": 2666,
+   "name": "tailRootCap",
+   "visibleOnFrame": false,
+   "inputs": [
+    {
+     "name": "segments",
+     "valueType": "number",
+     "value": 6
+    },
+    {
+     "name": "diameter",
+     "valueType": "number",
+     "value": 1
+    },
+    {
+     "name": "diameterX",
+     "valueType": "number",
+     "value": 0.175
+    },
+    {
+     "name": "diameterY",
+     "valueType": "number",
+     "value": 0.1575
+    },
+    {
+     "name": "diameterZ",
+     "valueType": "number",
+     "value": 0.16
+    },
+    {
+     "name": "arc",
+     "valueType": "number",
+     "value": 1
+    },
+    {
+     "name": "slice",
+     "valueType": "number",
+     "value": 1
+    }
+   ],
+   "outputs": [
+    {
+     "name": "geometry"
+    }
+   ],
+   "evaluateContext": false
+  },
+  {
+   "customType": "BABYLON.SetPositionsBlock",
+   "id": 2685,
+   "name": "tailFinRide",
+   "visibleOnFrame": false,
+   "inputs": [
+    {
+     "name": "geometry",
+     "inputName": "geometry",
+     "targetBlockId": 2679,
+     "targetConnectionName": "output",
+     "isExposedOnFrame": true,
+     "exposedPortPosition": -1
+    },
+    {
+     "name": "positions",
+     "inputName": "positions",
+     "targetBlockId": 2684,
+     "targetConnectionName": "output",
+     "isExposedOnFrame": true,
+     "exposedPortPosition": -1
+    }
+   ],
+   "outputs": [
+    {
+     "name": "output"
+    }
+   ],
+   "evaluateContext": true
+  },
+  {
+   "customType": "BABYLON.GeometryTransformBlock",
+   "id": 2679,
+   "name": "tailFinStart",
+   "visibleOnFrame": false,
+   "inputs": [
+    {
+     "name": "value",
+     "inputName": "value",
+     "targetBlockId": 2667,
+     "targetConnectionName": "output",
+     "isExposedOnFrame": true,
+     "exposedPortPosition": -1
+    },
+    {
+     "name": "matrix"
+    },
+    {
+     "name": "translation",
+     "valueType": "BABYLON.Vector3",
+     "value": [
+      0,
+      0,
+      -0.06
+     ]
+    },
+    {
+     "name": "rotation",
+     "valueType": "BABYLON.Vector3",
+     "value": [
+      0,
+      0,
+      0
+     ]
+    },
+    {
+     "name": "scaling",
+     "valueType": "BABYLON.Vector3",
+     "value": [
+      1,
+      1,
+      1
+     ]
+    },
+    {
+     "name": "pivot",
+     "valueType": "BABYLON.Vector3",
+     "value": [
+      0,
+      0,
+      0
+     ]
+    }
+   ],
+   "outputs": [
+    {
+     "name": "output"
+    }
+   ],
+   "evaluateContext": true
+  },
+  {
+   "customType": "BABYLON.InstantiateLinearBlock",
+   "id": 2667,
+   "name": "tailFinRow",
+   "visibleOnFrame": false,
+   "inputs": [
+    {
+     "name": "instance",
+     "inputName": "instance",
+     "targetBlockId": 2678,
+     "targetConnectionName": "output",
+     "isExposedOnFrame": true,
+     "exposedPortPosition": -1
+    },
+    {
+     "name": "count",
+     "valueType": "number",
+     "value": 4
+    },
+    {
+     "name": "direction",
+     "valueType": "BABYLON.Vector3",
+     "value": [
+      0,
+      0,
+      -0.2
+     ]
+    },
+    {
+     "name": "rotation",
+     "valueType": "BABYLON.Vector3",
+     "value": [
+      0,
+      0,
+      0
+     ]
+    },
+    {
+     "name": "scaling",
+     "valueType": "BABYLON.Vector3",
+     "value": [
+      -0.17,
+      -0.17,
+      -0.17
+     ]
+    }
+   ],
+   "outputs": [
+    {
+     "name": "output"
+    }
+   ],
+   "evaluateContext": true
+  },
+  {
+   "customType": "BABYLON.GeometryTransformBlock",
+   "id": 2678,
+   "name": "tailFinSize",
+   "visibleOnFrame": false,
+   "inputs": [
+    {
+     "name": "value",
+     "inputName": "value",
+     "targetBlockId": 2677,
+     "targetConnectionName": "output",
+     "isExposedOnFrame": true,
+     "exposedPortPosition": -1
+    },
+    {
+     "name": "matrix"
+    },
+    {
+     "name": "translation",
+     "valueType": "BABYLON.Vector3",
+     "value": [
+      0,
+      0,
+      0
+     ]
+    },
+    {
+     "name": "rotation",
+     "valueType": "BABYLON.Vector3",
+     "value": [
+      0,
+      0,
+      0
+     ]
+    },
+    {
+     "name": "scaling",
+     "valueType": "BABYLON.Vector3",
+     "value": [
+      0.13,
+      0.13,
+      0.13
+     ]
+    },
+    {
+     "name": "pivot",
+     "valueType": "BABYLON.Vector3",
+     "value": [
+      0,
+      0,
+      0
+     ]
+    }
+   ],
+   "outputs": [
+    {
+     "name": "output"
+    }
+   ],
+   "evaluateContext": true
+  },
+  {
+   "customType": "BABYLON.SetPositionsBlock",
+   "id": 2677,
+   "name": "tailSpikeSweep",
+   "visibleOnFrame": false,
+   "inputs": [
+    {
+     "name": "geometry",
+     "inputName": "geometry",
+     "targetBlockId": 2670,
+     "targetConnectionName": "output",
+     "isExposedOnFrame": true,
+     "exposedPortPosition": -1
+    },
+    {
+     "name": "positions",
+     "inputName": "positions",
+     "targetBlockId": 2676,
+     "targetConnectionName": "output",
+     "isExposedOnFrame": true,
+     "exposedPortPosition": -1
+    }
+   ],
+   "outputs": [
+    {
+     "name": "output"
+    }
+   ],
+   "evaluateContext": true
+  },
+  {
+   "customType": "BABYLON.GeometryTransformBlock",
+   "id": 2670,
+   "name": "tailSpikeStand",
+   "visibleOnFrame": false,
+   "inputs": [
+    {
+     "name": "value",
+     "inputName": "value",
+     "targetBlockId": 2669,
+     "targetConnectionName": "geometry",
+     "isExposedOnFrame": true,
+     "exposedPortPosition": -1
+    },
+    {
+     "name": "matrix"
+    },
+    {
+     "name": "translation",
+     "valueType": "BABYLON.Vector3",
+     "value": [
+      0,
+      0.5,
+      0
+     ]
+    },
+    {
+     "name": "rotation",
+     "valueType": "BABYLON.Vector3",
+     "value": [
+      0,
+      0,
+      0
+     ]
+    },
+    {
+     "name": "scaling",
+     "valueType": "BABYLON.Vector3",
+     "value": [
+      0.45,
+      1,
+      1
+     ]
+    },
+    {
+     "name": "pivot",
+     "valueType": "BABYLON.Vector3",
+     "value": [
+      0,
+      0,
+      0
+     ]
+    }
+   ],
+   "outputs": [
+    {
+     "name": "output"
+    }
+   ],
+   "evaluateContext": true
+  },
+  {
+   "customType": "BABYLON.CylinderBlock",
+   "id": 2669,
+   "name": "tailSpikeCone",
+   "visibleOnFrame": false,
+   "inputs": [
+    {
+     "name": "height",
+     "valueType": "number",
+     "value": 1
+    },
+    {
+     "name": "diameter",
+     "valueType": "number",
+     "value": 1
+    },
+    {
+     "name": "diameterTop",
+     "valueType": "number",
+     "value": 0
+    },
+    {
+     "name": "diameterBottom",
+     "valueType": "number",
+     "value": 0.36
+    },
+    {
+     "name": "subdivisions",
+     "valueType": "number",
+     "value": 4
+    },
+    {
+     "name": "tessellation",
+     "valueType": "number",
+     "value": 6
+    },
+    {
+     "name": "arc",
+     "valueType": "number",
+     "value": 1
+    }
+   ],
+   "outputs": [
+    {
+     "name": "geometry"
+    }
+   ],
+   "evaluateContext": false
+  },
+  {
+   "customType": "BABYLON.MathBlock",
+   "id": 2676,
+   "name": "tailSpikeSwept",
+   "visibleOnFrame": false,
+   "inputs": [
+    {
+     "name": "left",
+     "inputName": "left",
+     "targetBlockId": 2668,
+     "targetConnectionName": "output",
+     "isExposedOnFrame": true,
+     "exposedPortPosition": -1
+    },
+    {
+     "name": "right",
+     "inputName": "right",
+     "targetBlockId": 2675,
+     "targetConnectionName": "xyz",
+     "isExposedOnFrame": true,
+     "exposedPortPosition": -1
+    }
+   ],
+   "outputs": [
+    {
+     "name": "output"
+    }
+   ],
+   "operation": 0
+  },
+  {
+   "customType": "BABYLON.GeometryInputBlock",
+   "id": 2668,
+   "name": "tailSpikePositions",
+   "visibleOnFrame": false,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "output"
+    }
+   ],
+   "type": 8,
+   "contextualValue": 1,
+   "min": 0,
+   "max": 0,
+   "groupInInspector": "",
+   "displayInInspector": true
+  },
+  {
+   "customType": "BABYLON.VectorConverterBlock",
+   "id": 2675,
+   "name": "tailSpikeBackVec",
+   "visibleOnFrame": false,
+   "inputs": [
+    {
+     "name": "xyzw "
+    },
+    {
+     "name": "xyz "
+    },
+    {
+     "name": "xy "
+    },
+    {
+     "name": "zw "
+    },
+    {
+     "name": "x "
+    },
+    {
+     "name": "y "
+    },
+    {
+     "name": "z ",
+     "inputName": "z ",
+     "targetBlockId": 2674,
+     "targetConnectionName": "output",
+     "isExposedOnFrame": true,
+     "exposedPortPosition": -1
+    },
+    {
+     "name": "w "
+    }
+   ],
+   "outputs": [
+    {
+     "name": "xyzw"
+    },
+    {
+     "name": "xyz"
+    },
+    {
+     "name": "xy"
+    },
+    {
+     "name": "zw"
+    },
+    {
+     "name": "x"
+    },
+    {
+     "name": "y"
+    },
+    {
+     "name": "z"
+    },
+    {
+     "name": "w"
+    }
+   ]
+  },
+  {
+   "customType": "BABYLON.MathBlock",
+   "id": 2674,
+   "name": "tailSpikeBack",
+   "visibleOnFrame": false,
+   "inputs": [
+    {
+     "name": "left",
+     "inputName": "left",
+     "targetBlockId": 2672,
+     "targetConnectionName": "output",
+     "isExposedOnFrame": true,
+     "exposedPortPosition": -1
+    },
+    {
+     "name": "right",
+     "inputName": "right",
+     "targetBlockId": 2673,
+     "targetConnectionName": "output",
+     "isExposedOnFrame": true,
+     "exposedPortPosition": -1
+    }
+   ],
+   "outputs": [
+    {
+     "name": "output"
+    }
+   ],
+   "operation": 2
+  },
+  {
+   "customType": "BABYLON.MathBlock",
+   "id": 2672,
+   "name": "tailSpikeY2",
+   "visibleOnFrame": false,
+   "inputs": [
+    {
+     "name": "left",
+     "inputName": "left",
+     "targetBlockId": 2671,
+     "targetConnectionName": "y",
+     "isExposedOnFrame": true,
+     "exposedPortPosition": -1
+    },
+    {
+     "name": "right",
+     "inputName": "right",
+     "targetBlockId": 2671,
+     "targetConnectionName": "y",
+     "isExposedOnFrame": true,
+     "exposedPortPosition": -1
+    }
+   ],
+   "outputs": [
+    {
+     "name": "output"
+    }
+   ],
+   "operation": 2
+  },
+  {
+   "customType": "BABYLON.VectorConverterBlock",
+   "id": 2671,
+   "name": "tailSpikeSplit",
+   "visibleOnFrame": false,
+   "inputs": [
+    {
+     "name": "xyzw "
+    },
+    {
+     "name": "xyz ",
+     "inputName": "xyz ",
+     "targetBlockId": 2668,
+     "targetConnectionName": "output",
+     "isExposedOnFrame": true,
+     "exposedPortPosition": -1
+    },
+    {
+     "name": "xy "
+    },
+    {
+     "name": "zw "
+    },
+    {
+     "name": "x "
+    },
+    {
+     "name": "y "
+    },
+    {
+     "name": "z "
+    },
+    {
+     "name": "w "
+    }
+   ],
+   "outputs": [
+    {
+     "name": "xyzw"
+    },
+    {
+     "name": "xyz"
+    },
+    {
+     "name": "xy"
+    },
+    {
+     "name": "zw"
+    },
+    {
+     "name": "x"
+    },
+    {
+     "name": "y"
+    },
+    {
+     "name": "z"
+    },
+    {
+     "name": "w"
+    }
+   ]
+  },
+  {
+   "customType": "BABYLON.GeometryInputBlock",
+   "id": 2673,
+   "name": "tailSpikeSweepAmount",
+   "visibleOnFrame": false,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "output"
+    }
+   ],
+   "type": 2,
+   "contextualValue": 0,
+   "min": 0,
+   "max": 0,
+   "groupInInspector": "",
+   "displayInInspector": true,
+   "valueType": "number",
+   "value": -0.45
+  },
+  {
+   "customType": "BABYLON.MathBlock",
+   "id": 2684,
+   "name": "tailFinLifted",
+   "visibleOnFrame": false,
+   "inputs": [
+    {
+     "name": "left",
+     "inputName": "left",
+     "targetBlockId": 2632,
+     "targetConnectionName": "output",
+     "isExposedOnFrame": true,
+     "exposedPortPosition": -1
+    },
+    {
+     "name": "right",
+     "inputName": "right",
+     "targetBlockId": 2683,
+     "targetConnectionName": "xyz",
+     "isExposedOnFrame": true,
+     "exposedPortPosition": -1
+    }
+   ],
+   "outputs": [
+    {
+     "name": "output"
+    }
+   ],
+   "operation": 0
+  },
+  {
+   "customType": "BABYLON.VectorConverterBlock",
+   "id": 2683,
+   "name": "tailFinUp",
+   "visibleOnFrame": false,
+   "inputs": [
+    {
+     "name": "xyzw "
+    },
+    {
+     "name": "xyz "
+    },
+    {
+     "name": "xy "
+    },
+    {
+     "name": "zw "
+    },
+    {
+     "name": "x "
+    },
+    {
+     "name": "y ",
+     "inputName": "y ",
+     "targetBlockId": 2682,
+     "targetConnectionName": "output",
+     "isExposedOnFrame": true,
+     "exposedPortPosition": -1
+    },
+    {
+     "name": "z "
+    },
+    {
+     "name": "w "
+    }
+   ],
+   "outputs": [
+    {
+     "name": "xyzw"
+    },
+    {
+     "name": "xyz"
+    },
+    {
+     "name": "xy"
+    },
+    {
+     "name": "zw"
+    },
+    {
+     "name": "x"
+    },
+    {
+     "name": "y"
+    },
+    {
+     "name": "z"
+    },
+    {
+     "name": "w"
+    }
+   ]
+  },
+  {
+   "customType": "BABYLON.MathBlock",
+   "id": 2682,
+   "name": "tailFinRise",
+   "visibleOnFrame": false,
+   "inputs": [
+    {
+     "name": "left",
+     "inputName": "left",
+     "targetBlockId": 2681,
+     "targetConnectionName": "output",
+     "isExposedOnFrame": true,
+     "exposedPortPosition": -1
+    },
+    {
+     "name": "right",
+     "inputName": "right",
+     "targetBlockId": 2646,
+     "targetConnectionName": "output",
+     "isExposedOnFrame": true,
+     "exposedPortPosition": -1
+    }
+   ],
+   "outputs": [
+    {
+     "name": "output"
+    }
+   ],
+   "operation": 0
+  },
+  {
+   "customType": "BABYLON.MathBlock",
+   "id": 2681,
+   "name": "tailFinTop",
+   "visibleOnFrame": false,
+   "inputs": [
+    {
+     "name": "left",
+     "inputName": "left",
+     "targetBlockId": 2642,
+     "targetConnectionName": "output",
+     "isExposedOnFrame": true,
+     "exposedPortPosition": -1
+    },
+    {
+     "name": "right",
+     "inputName": "right",
+     "targetBlockId": 2680,
+     "targetConnectionName": "output",
+     "isExposedOnFrame": true,
+     "exposedPortPosition": -1
+    }
+   ],
+   "outputs": [
+    {
+     "name": "output"
+    }
+   ],
+   "operation": 2
+  },
+  {
+   "customType": "BABYLON.GeometryInputBlock",
+   "id": 2680,
+   "name": "finBase",
+   "visibleOnFrame": false,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "output"
+    }
+   ],
+   "type": 2,
+   "contextualValue": 0,
+   "min": 0,
+   "max": 0,
+   "groupInInspector": "",
+   "displayInInspector": true,
+   "valueType": "number",
+   "value": 0.059062500000000004
+  }
+ ]
+}

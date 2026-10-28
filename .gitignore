@@ -1,0 +1,12 @@
+node_modules/
+dist/
+# The zip for itch.io: it holds dist/, models included.
+*.zip
+
+# Models ripped from the Harry Potter games: fine for learning on this computer, never to be shared.
+models_source/
+models_build/
+public/models/
+
+# My notes and roadmap: kept on this computer until I decide to publish them.
+CLAUDE.md
