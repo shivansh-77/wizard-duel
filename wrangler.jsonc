@@ -1,0 +1,25 @@
+// Cloudflare's settings for Room play's relay (relay/room.js), read by wrangler:
+//   npm run relay          runs the relay on this computer (ws://localhost:8787), no account needed
+//   npm run relay:deploy   uploads it to your Cloudflare account (after `npx wrangler login`, once)
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "wizard-duel-relay", // the address becomes wizard-duel-relay.<your-subdomain>.workers.dev
+  "main": "relay/room.js", // the Worker's code (and the Room class)
+  // Which version of Cloudflare's runtime behaviour the code expects: a date, so later changes to the
+  // runtime never break code written before them.
+  "compatibility_date": "2026-10-01",
+
+  // A binding: how the Worker's code reaches the rooms. In relay/room.js, env.ROOMS is the namespace of
+  // every Room object (one per room code).
+  "durable_objects": {
+    "bindings": [{ "name": "ROOMS", "class_name": "Room" }]
+  },
+  // Migrations tell Cloudflare when a Durable Object class appears (or is renamed or deleted). The
+  // free plan only allows SQLite-backed objects, hence "new_sqlite_classes" (our rooms store nothing
+  // anyway: they only pass messages along).
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["Room"] }],
+
+  // The relay on this computer: ws://127.0.0.1:8787. (To test with a phone or a friend on the same
+  // Wi-Fi, run `npm run relay -- --ip 0.0.0.0`: then it listens on the local network too.)
+  "dev": { "ip": "127.0.0.1", "port": 8787 }
+}

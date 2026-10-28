@@ -7,13 +7,12 @@ const TOP = Control.VERTICAL_ALIGNMENT_TOP;
 const CENTER = Control.VERTICAL_ALIGNMENT_CENTER;
 const BOTTOM = Control.VERTICAL_ALIGNMENT_BOTTOM;
 
-// The keys line by line: player 1's (you) and player 2's, with the special of the wizard each plays.
-function help(yours, theirs) {
-  return [
-    `Player 1 (${yours.name}):  WASD glide  ·  J cast  ·  K apparate  ·  L Protego (hold)  ·  U beam  ·  Left Shift ${SPECIALS[yours.special].name}`,
-    `Player 2 (${theirs.name}):  arrows glide  ·  . cast  ·  / apparate  ·  ' Protego (hold)  ·  Enter beam  ·  ; ${SPECIALS[theirs.special].name}`,
-    "Esc  choose wizard  ·  C  CPU on/off  ·  M  sound  ·  R  restart  ·  V  camera (duel / behind you)  ·  F  Fiendfyre's look",
-  ].join("\n");
+// The keys line by line: yours, player 2's in Training (same keyboard), and the other keys.
+function help(yours, theirs, training) {
+  const lines = [`${training ? "Player 1" : "You"} (${yours.name}):  WASD glide  ·  J cast  ·  K apparate  ·  L Protego (hold)  ·  U beam  ·  Left Shift ${SPECIALS[yours.special].name}`];
+  if (training) lines.push(`Player 2 (${theirs.name}):  arrows glide  ·  . cast  ·  / apparate  ·  ' Protego (hold)  ·  Enter beam  ·  ; ${SPECIALS[theirs.special].name}`);
+  lines.push("Esc  menu  ·  M  sound  ·  R  restart  ·  V  camera (duel / behind you)  ·  F  Fiendfyre's look");
+  return lines.join("\n");
 }
 
 // The 2D layer drawn over the 3D scene: health bars (yours on the left), the winner banner, who plays
@@ -26,33 +25,36 @@ export function createHud() {
   const bars = [createHealthBar(ui, LEFT), createHealthBar(ui, RIGHT)]; // yours, the other's
   const status = createText(ui, "", { size: 18, height: 30, align: TOP, top: 88, outline: 3 }); // below the bars
   const banner = createText(ui, "", { size: 64, height: 90, top: -50, outline: 8 });
-  const prompt = createText(ui, "Press R to duel again  ·  Esc to choose another wizard", { size: 26, height: 40, top: 20, outline: 5 });
+  const prompt = createText(ui, "Press R to duel again  ·  Esc for the menu", { size: 26, height: 40, top: 20, outline: 5 });
   const clashTitle = createText(ui, "Priori Incantatem!", { size: 46, height: 64, align: TOP, top: 120, color: CLASH.color, outline: 7 });
   const clashHint = createText(ui, "Mash cast to push the light at him!", { size: 22, height: 34, align: TOP, top: 178, outline: 4 });
   const controls = createText(ui, "", { size: 15, height: 70, align: BOTTOM, top: -14, outline: 3 });
+  // Online: the connection, to compare Quick duel and Room (net/online.js `status`), or its news.
+  const net = createText(ui, "", { size: 16, height: 26, align: BOTTOM, top: -88, color: "#ffd75e", outline: 3 });
 
   return {
     // Copies the duel onto the HUD every frame: cheap, and it can never get out of date. `you` is
-    // the index of your wizard in duel.wizards; `opponent` who drives the other ("cpu", "player2" or
-    // "friend" online); `waiting`: an online duel is held up, waiting for the friend's input.
+    // the index of your wizard in duel.wizards; `opponent` who drives the other ("cpu", "player2" in
+    // Training, or "friend" online); `online`: the connection line (empty offline); `waiting`: an
+    // online duel is held up, waiting for the friend's input.
     sync(duel, { you, opponent, muted, look, online, waiting }) {
       const yours = duel.wizards[you];
       const theirs = duel.wizards[1 - you];
       bars[0].show(yours, " (you)");
       bars[1].show(theirs, "");
-      controls.text = help(yours.data, theirs.data);
+      controls.text = help(yours.data, theirs.data, opponent === "player2");
       clashTitle.isVisible = duel.clash !== null;
       clashHint.isVisible = duel.clash !== null;
       const over = duel.phase === "over";
       banner.isVisible = over;
       prompt.isVisible = over;
       if (over) banner.text = `${duel.wizards[duel.winner].data.name} wins!`;
-      const labels = { cpu: "CPU  (C for 2 players)", player2: "player 2  (C for the CPU)", friend: "your friend, online" };
+      const labels = { cpu: "CPU", player2: "player 2 (arrows)", friend: "your friend, online" };
       const parts = [`${theirs.data.name}: ${labels[opponent]}`, `Fiendfyre: ${look}`];
       if (muted) parts.push("sound off");
-      if (online) parts.push(online.split("\n")[0]); // the online news, first line (net/online.js)
       if (waiting) parts.push("waiting for your friend…");
       status.text = parts.join("    ·    ");
+      net.text = online;
     },
   };
 }

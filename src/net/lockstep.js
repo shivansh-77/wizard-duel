@@ -20,6 +20,7 @@ import { checksum } from "../game/checksum.js";
 
 const CHECK_EVERY = 60; // steps: compare checksums once a second
 const MAX_PER_TICK = 2; // when behind (inputs piled up), run up to 2 steps per tick to catch up
+const FREEZE_MS = 50; // a wait longer than this (3 frames) is a freeze you can see
 
 // The buttons in an input, in a fixed order: each becomes one bit of a number.
 const BUTTONS = ["cast", "shield", "apparate", "beam", "special"];
@@ -58,6 +59,10 @@ export function createLockstep({ send, you, round, delay, onDesync }) {
   }
   let next = 0; // the next step to run
   let waitingSince = null; // performance.now() when we started waiting for the friend, or null
+  // Waits long enough to see (over FREEZE_MS): how many, and how long in all. For the HUD, to compare
+  // Quick duel and Room.
+  let freezes = 0;
+  let frozenMs = 0;
 
   function compare(step) {
     if (!sums.mine.has(step) || !sums.theirs.has(step)) return;
@@ -75,6 +80,13 @@ export function createLockstep({ send, you, round, delay, onDesync }) {
         if (!mine.has(next) || !theirs.has(next)) {
           if (n === 0 && waitingSince === null) waitingSince = performance.now();
           return; // your friend's input for this step isn't here yet: wait
+        }
+        if (waitingSince !== null) {
+          const waited = performance.now() - waitingSince;
+          if (waited > FREEZE_MS) {
+            freezes++;
+            frozenMs += waited;
+          }
         }
         waitingSince = null;
         const inputs = [];
@@ -114,6 +126,12 @@ export function createLockstep({ send, you, round, delay, onDesync }) {
     },
     get step() {
       return next;
+    },
+    get freezes() {
+      return freezes;
+    },
+    get frozenMs() {
+      return frozenMs;
     },
   };
 }

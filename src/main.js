@@ -5,7 +5,7 @@ import { cpuInput, createCpu } from "./game/cpu.js";
 import { createDuel, stepDuel } from "./game/duel.js";
 import { createFixedStep } from "./game/fixed_step.js";
 import { onMenuKey, readInput } from "./input/keyboard.js";
-import { createOnline } from "./net/online.js";
+import { createOnline, modeOfCode } from "./net/online.js";
 import { createArena } from "./view/arena.js";
 import { setupAtmosphere } from "./view/atmosphere.js";
 import { createBeamViews } from "./view/beams.js";
@@ -17,7 +17,7 @@ import { createLighting } from "./view/lighting.js";
 import { createPostEffects } from "./view/post.js";
 import { createReactions } from "./view/reactions.js";
 import { createJoinBox } from "./view/join_box.js";
-import { createSelectScreen } from "./view/select_screen.js";
+import { createMenu } from "./view/menu.js";
 import { createSounds } from "./view/sounds.js";
 import { createSpecialViews } from "./view/specials.js";
 import { createSpellLights } from "./view/spell_lights.js";
@@ -49,8 +49,11 @@ const DUELLISTS = [WIZARDS.dumbledore, WIZARDS.voldemort];
 let duel;
 let cpu;
 let duelCount = 0;
-let you = 0; // the wizard player 1 (you, on WASD) plays: 0 Dumbledore, 1 Voldemort (the start screen)
-let cpuOn = true; // the CPU plays the other wizard until you press C (then player 2, on the arrows)
+let you = 0; // the wizard player 1 (you, on WASD) plays: 0 Dumbledore, 1 Voldemort (picked in the menu)
+// The mode of this duel, from the menu: "cpu", "training" (player 2 on the arrows), "quick" or "room"
+// (online: the lockstep runs it).
+let mode = "cpu";
+let cpuOn = true; // the CPU plays the other wizard (not in Training; online only if your friend leaves)
 
 function startDuel() {
   duel = createDuel(DUELLISTS);
@@ -94,39 +97,59 @@ const wandGlows = createWandGlows(scene, DUELLISTS, effects, wandTip);
 const spellLights = createSpellLights(scene);
 const hud = createHud();
 
-// The start screen: the duel waits behind it until you pick your wizard. Picking starts a new duel,
-// with the camera putting your wizard on the left.
-const select = createSelectScreen(DUELLISTS, choose, () => online.host());
+// The menu (view/menu.js): the duel waits behind it. Its main screen picks a mode; vs CPU and Training
+// then pick your wizard; Quick duel and Room host or join, and the host picks once his friend is here.
+const MENU_MODES = ["cpu", "training", "quick", "room"]; // keys 1–4 on the main screen
+const isOnline = (screen) => screen === "quick" || screen === "room";
+const menu = createMenu(DUELLISTS, {
+  onMode: (screen) => menu.open(screen),
+  onWizard: (index) => choose(index),
+  onHost: () => online.host(menu.screen),
+});
 function choose(index) {
-  if (online.connected) {
+  const screen = menu.screen;
+  if (isOnline(screen)) {
     // Online, the host picks for both (his friend gets the other wizard) and the duel starts on both.
-    if (online.isHost) online.start(index);
+    if (online.connected && online.isHost) online.start(index);
     return;
   }
-  play(index);
+  if (screen === "cpu" || screen === "training") play(index, screen);
 }
-// A new duel with you as wizard `index`, your wizard on the left.
-function play(index) {
+// A new duel in `newMode` with you as wizard `index`, your wizard on the left.
+function play(index, newMode) {
   you = index;
-  select.hide();
+  mode = newMode;
+  cpuOn = mode !== "training";
+  menu.hide();
   startDuel();
   camera.setPlayer(you);
   camera.reset();
 }
+// Esc in the menu: one screen back (leaving an online screen leaves the online game).
+function back() {
+  if (menu.screen === "main") return;
+  if (isOnline(menu.screen)) online.leave();
+  menu.open("main");
+}
 
-// ---- Online (net/online.js): host or join with PeerJS, then a duel in lockstep with your friend ----
+// ---- Online (net/online.js): Quick duel (PeerJS) or Room (Cloudflare), then lockstep with a friend ----
 const online = createOnline({
-  onNews: (text) => select.setOnline(text),
-  onStart: (index) => play(index),
+  onStart: (index) => play(index, online.mode),
   onLeft: () => {
     cpuOn = true; // the CPU takes over your friend's wizard
   },
 });
-// Two ways to join a friend's game: type the code in the box at the top of the start screen, or open
+// Two ways to join a friend's game: type the code in the box at the top of an online screen, or open
 // the game with ?join=CODE at the end of the address (not on itch.io, where the game runs in a frame).
-const joinBox = createJoinBox((code) => online.join(code));
+// The code's length says which mode it belongs to: a Room code typed in Quick duel opens Room.
+function joinFriend(code) {
+  const codeMode = modeOfCode(code);
+  if (!online.mode && codeMode && codeMode !== menu.screen) menu.open(codeMode);
+  online.join(code);
+}
+const joinBox = createJoinBox(joinFriend);
 const joinCode = new URLSearchParams(location.search).get("join");
-if (joinCode) online.join(joinCode);
+if (joinCode) joinFriend(joinCode.toUpperCase());
 
 // Sounds load in the background; until then (or if the browser has no audio) play() does nothing.
 const sounds = { play() {}, toggleMute: () => false };
@@ -138,26 +161,33 @@ let muted = false;
 const react = createReactions({ effects, camera, post, wandGlows, wizardViews, sounds });
 
 onMenuKey((action) => {
-  if (select.visible) {
-    // On the start screen only picking does anything (and sound / CPU, which are settings).
-    if (action === "pick1") choose(0);
-    if (action === "pick2") choose(1);
-    if (action === "host") online.host();
-    if (action === "cpu") cpuOn = !cpuOn;
+  if (menu.visible) {
+    // In the menu: 1–4 pick a mode on the main screen, 1–2 a wizard elsewhere; H hosts; Esc goes back.
+    const number = { pick1: 0, pick2: 1, pick3: 2, pick4: 3 }[action];
+    if (number !== undefined && menu.screen === "main") menu.open(MENU_MODES[number]);
+    else if (number !== undefined && number < 2) choose(number);
+    if (action === "host" && isOnline(menu.screen)) online.host(menu.screen);
+    if (action === "menu") back();
     if (action === "mute") muted = sounds.toggleMute();
     return;
   }
   if (online.lockstep) {
-    // An online duel: only the host restarts (R) or goes back to pick again (Esc); no CPU.
+    // An online duel: only the host restarts (R) or goes back to pick again (Esc). The guest's Esc
+    // leaves (the host's CPU takes over).
     if (online.isHost && action === "restart") online.start(you);
-    if (online.isHost && action === "menu") select.show();
+    if (action === "menu") {
+      if (online.isHost) menu.open(online.mode);
+      else {
+        online.leave();
+        menu.open("main");
+      }
+    }
   } else {
-    if (action === "menu") select.show(); // back to the start screen
+    if (action === "menu") menu.open(mode); // back to this mode's screen (choose again, or host again)
     if (action === "restart") {
       startDuel();
       camera.reset();
     }
-    if (action === "cpu") cpuOn = !cpuOn;
   }
   if (action === "mute") muted = sounds.toggleMute();
   if (action === "view") camera.toggleView(); // the duel camera <-> behind your wizard
@@ -167,14 +197,18 @@ onMenuKey((action) => {
 // The render loop: Babylon calls this once per frame, as often as the screen refreshes.
 engine.runRenderLoop(() => {
   const seconds = engine.getDeltaTime() / 1000; // this frame's duration (ms → s)
-  if (!select.visible) advance(seconds); // 1. run the gameplay steps this frame's time covers (paused on the start screen)
+  if (!menu.visible) advance(seconds); // 1. run the gameplay steps this frame's time covers (paused in the menu)
   react(duel.events.splice(0)); // 2. sparks, flashes, sounds for what just happened
   wizardViews.forEach((view, i) => syncWizard(view, duel.wizards[i], seconds)); // 3. match the meshes to the rules
   camera.follow(duel, seconds); // the camera turns, backs off or swoops to frame the duel
-  joinBox.show(select.visible && !online.connected); // the join box belongs to the start screen
+  // The online screens: the join box (until you host or join), the news, the wizards once you can pick.
+  joinBox.show(menu.visible && isOnline(menu.screen) && !online.mode);
+  menu.setOnline(online.news, { picking: online.connected && online.isHost, hosting: online.mode !== null });
   const opponent = online.lockstep ? "friend" : cpuOn ? "cpu" : "player2";
   const waiting = online.lockstep !== null && online.lockstep.waiting() > 250; // a visible freeze
-  hud.sync(duel, { you, opponent, muted, look: specialViews.look, online: online.news, waiting });
+  // The HUD's connection line: during an online duel the comparison numbers, after it the news.
+  const net = online.lockstep ? online.status : isOnline(mode) ? online.news.split("\n")[0] : "";
+  hud.sync(duel, { you, opponent, muted, look: specialViews.look, online: net, waiting });
   scene.render(); // 4. animate the clips, then (spells, below), then draw
 });
 
@@ -194,12 +228,16 @@ window.addEventListener("resize", () => {
   engine.resize();
 });
 
-// For poking at the game from the browser's console (F12 → Console): wizardDuel.duel is the rules'
-// state right now, wizardDuel.scene the Babylon scene, wizardDuel.online the online session.
-window.wizardDuel = {
-  scene,
-  online,
-  get duel() {
-    return duel;
-  },
-};
+// For poking at the game from the browser's console (F12 → Console) while developing: wizardDuel.duel
+// is the rules' state right now, wizardDuel.scene the Babylon scene, wizardDuel.online the online
+// session. Only in `npm run dev`: Vite turns import.meta.env.DEV into false for `npm run build`, and the
+// whole block is left out of the built game (nothing to poke at on itch.io or GitHub Pages).
+if (import.meta.env.DEV) {
+  window.wizardDuel = {
+    scene,
+    online,
+    get duel() {
+      return duel;
+    },
+  };
+}

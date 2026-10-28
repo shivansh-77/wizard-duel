@@ -10,3 +10,6 @@ public/models/
 
 # My notes and roadmap: kept on this computer until I decide to publish them.
 CLAUDE.md
+
+# wrangler's local files (the relay running on this computer: npm run relay).
+.wrangler/

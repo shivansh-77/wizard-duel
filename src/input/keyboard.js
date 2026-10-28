@@ -36,14 +36,15 @@ const BINDINGS = {
 // Keys outside the duel: they call the handler given to onMenuKey once per press.
 const MENU_KEYS = {
   KeyR: "restart",
-  KeyC: "cpu",
   KeyM: "mute",
   KeyV: "view",
   KeyF: "look",
-  Escape: "menu", // back to the start screen
-  KeyH: "host", // on the start screen: host an online duel
-  Digit1: "pick1", // on the start screen: play Dumbledore...
-  Digit2: "pick2", // ...or Voldemort
+  Escape: "menu", // back: to the menu during a duel, to the previous screen in the menu
+  KeyH: "host", // on an online screen: host
+  Digit1: "pick1", // in the menu: the first mode, or Dumbledore...
+  Digit2: "pick2", // ...the second mode, or Voldemort
+  Digit3: "pick3", // the third mode (Quick duel)
+  Digit4: "pick4", // the fourth mode (Room)
 };
 
 const GAME_KEYS = new Set(Object.values(BINDINGS).flatMap((keys) => Object.values(keys).flat()));
